@@ -1,8 +1,16 @@
-import { buttonVariants } from '@/components/ui/button';
-import { cn } from '@/lib/utils';
+'use client';
+
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { FormUiComponent } from '../signin';
+import { useTranslation } from 'react-i18next';
+import Image from 'next/image';
+import { useState } from 'react';
+import { OTPFormUiComponent } from '@/components/utility';
+import { SubmitHandler, useFormContext } from 'react-hook-form';
+import { InitialValue, SignInData, SignInSchema } from '../signin/form.config';
+import { useRouter } from 'next/navigation';
+import { HookFormWrapper } from '@/components/utility/hook-form-wrapper';
 
 export const metadata: Metadata = {
   title: 'Authentication',
@@ -10,42 +18,102 @@ export const metadata: Metadata = {
 };
 
 export default function SignInViewPage() {
-  return (
-    <div className='relative container h-screen flex-col items-center justify-center md:grid lg:max-w-none lg:grid-cols-2 lg:px-0'>
-      <Link
-        href='#'
-        className={cn(
-          buttonVariants({ variant: 'ghost' }),
-          'absolute top-4 right-4 hidden md:top-8 md:right-8'
-        )}
-      >
-        Login
-      </Link>
-      <div className='bg-muted relative hidden h-full flex-col p-10 text-white lg:flex dark:border-r'>
-        <div className='absolute inset-0 bg-zinc-900' />
-        <div className='relative z-20 flex items-center text-lg font-medium'>
-          <svg
-            xmlns='http://www.w3.org/2000/svg'
-            viewBox='0 0 24 24'
-            fill='none'
-            stroke='currentColor'
-            strokeWidth='2'
-            strokeLinecap='round'
-            strokeLinejoin='round'
-            className='mr-2 h-6 w-6'
-          >
-            <path d='M15 6v12a3 3 0 1 0 3-3H6a3 3 0 1 0 3 3V6a3 3 0 1 0-3 3h12a3 3 0 1 0-3-3' />
-          </svg>
-          Logo
-        </div>
-        <div className='relative z-20 mt-auto'></div>
-      </div>
+  // const { setValue } = useForm<SignInData>();
 
-      <div className='flex h-full items-center justify-center p-4 lg:p-8'>
-        <div className='flex w-full max-w-md flex-col items-center justify-center space-y-6'>
-          <FormUiComponent />
-        </div>
-      </div>
-    </div>
+  const onSubmit: SubmitHandler<SignInData> = (data) => {
+    // setValue('isSubmit', true);
+    // eslint-disable-next-line no-console
+    console.log(data, 'data');
+  };
+
+  return (
+    <>
+      <HookFormWrapper
+        initialValues={InitialValue}
+        validationSchema={SignInSchema}
+        onSubmit={onSubmit}
+      >
+        {() => <SignInUIComponent />}
+      </HookFormWrapper>
+    </>
   );
 }
+
+export const SignInUIComponent = () => {
+  const router = useRouter();
+
+  const { t } = useTranslation('auth');
+  const [otp, setOtp] = useState<string>('');
+
+  const { watch } = useFormContext<SignInData>();
+
+  const handleVerify = () => {
+    // eslint-disable-next-line no-console
+    console.log('OTP entered:', otp);
+    router.push('/dashboard/overview');
+  };
+
+  return (
+    <section>
+      <div className='bg-section-gradient'>
+        <div className='container'>
+          <div className='grid h-[calc(100vh-calc(var(--header-height)*2)+10px)] grid-cols-1 py-[38px] md:grid-cols-2'>
+            <div className='flex h-full items-center'>
+              <div className='max-w-[500px]'>
+                <h1 className='m-0 p-0 text-4xl font-bold lg:text-7xl'>
+                  {' '}
+                  {t('create_account_title')}{' '}
+                </h1>
+                <div className='relative mt-[40px]'>
+                  <div className='flex items-center gap-5'>
+                    <Link
+                      href={'#'}
+                      className='hover:bg-primary group border-brand-secondary bg-brand-secondary cursor-pointer rounded-2xl border px-8 py-1 text-white transition-all duration-200 hover:text-white'
+                    >
+                      {t('sign_up_btn_text')}
+                    </Link>
+                    <div className='relative'>
+                      <p className='text-tertiary m-0 max-w-[260px] p-0 text-base leading-5'>
+                        {t('sign_in_slogan_text')}
+                      </p>
+                      <div className='absolute top-[-20px] right-5'>
+                        <Image
+                          alt='arrow-icon'
+                          src={'/assets/images/auth/arrow-icon.svg'}
+                          height={20}
+                          width={50}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className='flex h-full items-center justify-center lg:justify-end'>
+              {watch('isSubmit') ? (
+                <OTPFormUiComponent
+                  length={6}
+                  onChange={setOtp}
+                  title={t('otp_title_text')}
+                  description={t('otp_description_text') + ' 019*****9'}
+                  onClickMethod={handleVerify}
+                  loading={false}
+                  onResend={() => null}
+                />
+              ) : (
+                <FormUiComponent />
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='container'>
+        <div className='pt-6 pb-2'>
+          <p className='text-quaternary m-0 p-0 text-center text-2xl'>
+            {t('sign_in_footer_slogan_text')}
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};

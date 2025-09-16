@@ -1,9 +1,18 @@
 import { z } from 'zod';
 
 export const SignInSchema = z.object({
-  email: z.string().min(1, 'Email is required').email('Invalid email'),
+  countryCode: z.string().min(1, 'Select a country code'),
+  phoneNumber: z.string().regex(/^[0-9]{6,14}$/, 'Enter a valid phone number'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
-  remember: z.boolean().optional()
+  remember: z.boolean().optional(),
+  isSubmit: z.boolean().optional()
 });
+
+export const InitialValue = {
+  countryCode: '+880',
+  phoneNumber: '1956465465',
+  password: '123456',
+  isSubmit: false
+};
 
 export type SignInData = z.infer<typeof SignInSchema>;
