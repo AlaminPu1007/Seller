@@ -12,7 +12,7 @@ export const AuthHeaderComponent = () => {
   return (
     <div className='bg-white'>
       <div className='container'>
-        <div className='!h-[90px] items-center justify-between md:flex'>
+        <div className='items-center justify-between md:flex lg:h-[var(--header-height)]'>
           <div>
             <Image
               src={'/assets/images/app-logo/app-logo.svg'}
@@ -24,14 +24,14 @@ export const AuthHeaderComponent = () => {
           <div className='flex flex-wrap items-center gap-4'>
             <div className='flex items-center gap-2'>
               <div>
-                <Button className='group cursor-pointer rounded-2xl border border-[#00ACD4] bg-white text-[#00ACD4] hover:bg-[#00ACD4] hover:text-white'>
+                <Button className='group border-brand-secondary text-brand-secondary hover:bg-brand-secondary cursor-pointer rounded-2xl border bg-white hover:text-white'>
                   <svg
                     width={21}
                     height={20}
                     viewBox='0 0 21 20'
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'
-                    className='text-[#00ACD4] transition-colors duration-200 group-hover:text-white'
+                    className='text-brand-secondary transition-colors duration-200 group-hover:text-white'
                   >
                     <path
                       d='M15.75 9.25H5.25C4.42157 9.25 3.75 9.92157 3.75 10.75V16C3.75 16.8284 4.42157 17.5 5.25 17.5H15.75C16.5784 17.5 17.25 16.8284 17.25 16V10.75C17.25 9.92157 16.5784 9.25 15.75 9.25Z'
@@ -53,7 +53,7 @@ export const AuthHeaderComponent = () => {
               </div>
 
               <div>
-                <Button className='group cursor-pointer rounded-2xl border border-[#00ACD4] bg-[#00ACD4] text-white hover:text-white'>
+                <Button className='group border-brand-secondary bg-brand-secondary cursor-pointer rounded-2xl border text-white hover:text-white'>
                   {t('sign_up_btn_text')}
                 </Button>
               </div>
