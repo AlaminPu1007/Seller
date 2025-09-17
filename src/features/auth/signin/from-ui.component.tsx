@@ -43,7 +43,7 @@ export const FormUiComponent = () => {
   }>({
     name: 'bangladesh',
     flag: 'https://flagcdn.com/w40/bd.png',
-    code: '+88'
+    code: '+880'
   });
 
   function handleChange(val: string) {
@@ -246,6 +246,7 @@ export const FormUiComponent = () => {
                     <button
                       className='flex cursor-pointer items-center justify-center px-2'
                       onClick={handlePasswordVisibleMethod}
+                      type='button'
                     >
                       {isVisiblePassword ? (
                         <svg
@@ -308,21 +309,12 @@ export const FormUiComponent = () => {
 
           <Button
             disabled={loading}
-            className='mt-5 ml-auto h-[40px] w-full cursor-pointer rounded-sm text-base'
+            className='bg-brand-secondary mt-5 ml-auto h-[40px] w-full cursor-pointer rounded-sm text-base'
             type='submit'
             onClick={() => setTimeout(() => setValue('isSubmit', true), 50)}
           >
             {t('login_btn_text')}
           </Button>
-
-          <div>
-            <p className='text-center'>
-              {t('have_not_account_text') + '? '}
-              <Link className='text-blue-900 underline' href={'/auth/sign-up'}>
-                {t('sign_up_btn_text')}
-              </Link>
-            </p>
-          </div>
         </div>
       </div>
     </>

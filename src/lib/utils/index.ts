@@ -1,0 +1,1 @@
+export { maskMobileNumber } from './maskMobileNumber';

@@ -12,7 +12,7 @@ export const AuthHeaderComponent = () => {
   return (
     <div className='bg-white'>
       <div className='container'>
-        <div className='h-[var(--header-height)] items-center justify-between md:flex'>
+        <div className='items-center justify-between md:flex lg:h-[var(--header-height)]'>
           <div>
             <Image
               src={'/assets/images/app-logo/app-logo.svg'}
